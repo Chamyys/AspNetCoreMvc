@@ -1,24 +1,96 @@
 ﻿<!DOCTYPE html>
 <html>
+    <style>
+    .double-border-button {
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px 20px;
+        padding: 10px 30px;
+        position: relative;
+        border: 2px solid white;
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        transition: .4s;
+    }
+
+        .double-border-button:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            border: 2px solid rgba(0, 0, 0, 0);
+            transition: .4s;
+        }
+
+        .double-border-button:hover:after {
+            border-color: white;
+            width: calc(100% - 10px);
+            height: calc(100% + 10px);
+        }
+        .navbar{
+      height: 6rem;
+       }
+</style>
 <head>
     <meta charset="utf-8" />
-    <title>MVC</title>
+    <link href="/myStylesheet.css" rel="stylesheet" />
+    <title>Титульник</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" />
+    
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">MVC</a>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-fixed-top" --bs-navbar-padding-y = "0">
+        <div class="container-fluid" style="background-color:black">
+            <img src="/logo.png" alt="Тут должно быть лого" width="100" height="100"></img>
+        
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    <a class="nav-link" href="/Home/Bio">Bio</a>
-                    <a class="nav-link" href="/About/Contact">Contact</a>
-                </div>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active double-border-button" aria-current="page" href="/"><p class="SpaceAgecy" style="color: white">Основатель</p></a>
+
+                        </li>
+                        <li class="nav-item">
+                    <a href="/Home/Main" class="nav-link double-border-button"><p class="SpaceAgecy" style="color: white">Что делать?</p></a>
+                        </li>
+                        <li class="nav-item">
+                    <a href="/Home/NewLive" class="nav-link double-border-button"><p class="SpaceAgecy" style="color: white">Лучшая жизнь!</p></a>
+                        </li>
+                    <li class="nav-item">
+                        <a href="/Home/Rovers" class="nav-link double-border-button"><p class="SpaceAgecy" style="color: white">Жизнь аборигенов</p></a>
+                    </li>
+                       
+                    </ul>
+
+                   
             </div>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+
+            <ul class="navbar-nav" style="float: right">
+                    <div id="account">
+                    <li  class="nav-item" style="float: right">
+                        <a href="/Home/Login" class="nav-link double-border-button ms-auto" style="float: right"><p class="SpaceAgecy" style="color: white">Аккаунт</p></a>
+                    </li>
+                </div>
+            <div id="exit">
+                <li  class="nav-item" style="float: right">
+                    <a href="#" class="nav-link double-border-button ms-auto" style="float: right"><p class="SpaceAgecy" style="color: white">Выйти</p></a>
+                </li>
+                    </div>
+                   
+                <li>
+                        <p class="SpaceAgecy" style="color: white" id="localname"></p>
+                        <p class="SpaceAgecy" style="color: white" id="localsurname"></p>
+                </li>
+            </ul>
+            </
         </div>
     </nav>
     @RenderBody()
@@ -26,4 +98,34 @@
         <small>Copyright &copy; @DateTime.Now.Year</small>
     </footer>
 </body>
+
 </html>
+<script>
+
+     if (localStorage.getItem('isInAccount') == "false") {
+        document.getElementById("exit").hidden = true;
+        document.getElementById("account").hidden = false;
+    }
+    else if (localStorage.getItem('isInAccount') == "true") {
+        var name = localStorage.getItem('name');
+        var localname = document.getElementById('localname');
+        localname.innerHTML = name;
+        var surname = localStorage.getItem('surname');
+        var localsurname = document.getElementById('localsurname');
+        localsurname.innerHTML = surname;
+        document.getElementById("account").hidden = true;
+        document.getElementById("exit").hidden = false;
+    }
+  
+
+    function exit() {
+        localStorage.setItem("isInAccount", false)
+        document.getElementById("exit").hidden = true;
+        document.getElementById("account").hidden = false;
+        document.getElementById('localsurname').innerHTML = '';
+        document.getElementById('localname').innerHTML = '';
+
+    }
+ 
+    document.getElementById("exit").onclick = exit;
+</script>

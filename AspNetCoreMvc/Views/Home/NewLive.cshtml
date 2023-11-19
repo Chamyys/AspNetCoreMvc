@@ -1,0 +1,93 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="/myStylesheet.css" rel="stylesheet" />
+    <style>
+        .maindiv {
+            position: relative;
+            width: 100%;
+            height: 150vh;
+            overflow: hidden;
+        }
+
+            .maindiv::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url("/marscolony.png");
+                background-size: cover;
+                background-position: center;
+                filter: blur(7px);
+            }
+
+        .content {
+            position: relative;
+            z-index: 9999;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .card {
+            width: 80%;
+            text-align: center;
+            height: fit-content;
+            background-color: white;
+            transition: transform 0.3s ease-in-out;
+            border-radius: 3em;
+            margin-bottom: 5em;
+            margin-top: 3em;
+            padding-bottom: 1%;
+            opacity: 0.7;
+            align-content: center;
+        }
+        p {
+            font-family: SpaceAgecy;
+            color: black;
+            align-content:center;
+        
+            opacity: 1;
+           
+        }
+        .lotText{
+            text-align: justify;
+            margin: 3%;
+            margin-bottom: 1%;
+            text-indent: 1em;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="maindiv">
+        <div class="content">
+           <div class="card">
+                <p class="lotText">  Добро пожаловать на наш уникальный веб-сайт, где вы сможете приобрести билеты на захватывающие полеты на Марс! Устали от повседневной рутины и хотите побега от земных проблем? Тогда наша миссия - помочь вам осуществить эту мечту!</p>
+                <p class="lotText">
+                        Наши полеты на Марс предлагают невероятные возможности для приключений и открытий. Представьте себе, как вы будете путешествовать сквозь бескрайние просторы космоса, наблюдая за величественными пейзажами и загадочными красотами Красной планеты.
+                </p>
+                <p class="lotText">
+                     Мы предлагаем комфортабельные и безопасные космические корабли, специально разработанные для долгих перелетов. Наша команда экспертов гарантирует, что ваше путешествие будет безопасным и незабываемым. Вы сможете насладиться уникальным видом на Землю из космоса и ощутить себя настоящим пionerом.
+                </p>
+                <p class="lotText">
+                        Полет на Марс - это не только возможность побега от земных проблем, но и шанс внести свой вклад в исследование и освоение новых миров. Вы сможете стать частью истории и принять участие в научных исследованиях, которые помогут расширить наши знания о космосе и возможности жизни на других планетах.
+                </p>
+                <p class="lotText">
+                        Не упустите свой шанс стать одним из первых путешественников на Марс! Забудьте о земных проблемах и откройте для себя новые горизонты. Приобретайте билеты на нашем веб-сайте прямо сейчас и отправляйтесь в незабываемое космическое приключение!
+                </p>
+                <p class="lotText">     Обратите внимание, что наши полеты на Марс доступны только для ограниченного числа пассажиров, поэтому не упустите свой шанс. Закажите билеты прямо сейчас и начните свое путешествие в будущее уже сегодня!</p>
+           </div>
+        </div>
+    </div>
+</body>
+</html>

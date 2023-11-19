@@ -1,0 +1,231 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="/myStylesheet.css" rel="stylesheet" />
+    <style>
+        .maindiv {
+            position: relative;
+            width: 100%;
+            height: 87vh;
+            overflow: hidden;
+        }
+        body{
+            height: 100%;
+        }
+
+            .maindiv::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url("/login.jpg");
+                background-size: cover;
+                background-position: center;
+                filter: blur(7px);
+            }
+
+        .content {
+            position: relative;
+            z-index: 9999;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        p {
+            font-family: SpaceAgecy;
+            color: black;
+            align-content: center;
+            opacity: 1;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+            *:focus {
+                outline: none;
+            }
+
+   
+
+        .login {
+            margin: 20px auto;
+            width: 300px;
+        }
+
+        .login-screen {
+            background-color: #FFF;
+            padding: 20px;
+            border-radius: 5px
+        }
+
+        .app-title {
+            text-align: center;
+            color: #777;
+        }
+
+        .login-form {
+            text-align: center;
+        }
+
+        .control-group {
+            margin-bottom: 10px;
+        }
+
+        input {
+            text-align: center;
+            background-color: #ECF0F1;
+            border: 2px solid transparent;
+            border-radius: 3px;
+            font-size: 16px;
+            font-weight: 200;
+            padding: 10px 0;
+            width: 250px;
+            transition: border .5s;
+            font-family: SpaceAgecy;
+        }
+
+           
+
+        .btn {
+            border: 2px solid transparent;
+            background: #616161;
+            color: #ffffff;
+            font-size: 16px;
+            line-height: 25px;
+            padding: 10px 0;
+            text-decoration: none;
+            text-shadow: none;
+            border-radius: 3px;
+            box-shadow: none;
+            transition: 0.25s;
+            display: block;
+            width: 250px;
+            margin: 0 auto;
+            font-family: SpaceAgecy;
+        }
+
+            .btn:hover {
+                background-color: #424242;
+            }
+
+        input[type="text"] {
+            font-family: SpaceAgecy;
+        }
+        .login-link {
+            font-size: 12px;
+            color: #444;
+            display: block;
+            margin-top: 12px;
+        }
+        h1{
+            font-family: SpaceAgecy;
+        }
+    </style>
+</head>
+<body>
+    <div class="maindiv">
+        <div class="content">
+            <div class="login">
+                <div class="login-screen">
+                    <div class="app-title">
+                        <h1>Войти</h1>
+                    </div>
+
+                    <div class="login-form">
+                        <div class="control-group">
+                            <input type="text" class="login-field" value="" placeholder="Имя пользователя" id="login">
+                            <label class="login-field-icon fui-user" for="login-name"></label>
+                        </div>
+
+                        <div class="control-group">
+                            <input type="password" class="login-field" value="" placeholder="Пароль" id="password">
+                            <label class="login-field-icon fui-lock" for="login-pass"></label>
+                        </div>
+
+                        <a class="btn btn-primary btn-large btn-block" id="Login" href="#">Войти</a>
+                        <a class="login-link" href="/Home/Register"><p>Регистрация</p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    var obj;
+    function redirect() {
+        localStorage.setItem('name', obj.name);
+        localStorage.setItem('surname', obj.surname);
+        localStorage.setItem('isInAccount', true);
+        window.location.href = '/Home/Main'
+
+    }
+    function getObject() {
+        return {
+            login: document.getElementById("login").value,
+            password: document.getElementById("password").value,
+        }
+    }
+    function isObjectFine() {
+        var obj = getObject()
+        if (obj.login == "" ||
+            obj.password == "" 
+           ) {
+            alert("Закончите заполнение всех полей")
+            return false;
+        }
+        else {
+            return true
+        }
+
+    }
+
+    function pushData() {
+        return new Promise((resolve, reject) => {
+            if (isObjectFine()) {
+                axios.post('/Mongo/Login', getObject())
+                    .then(function (response) {
+                        console.log(response);
+                        if (response.status == '200') {
+                            obj = response.data;
+                            resolve();
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        reject(error);
+                    });
+            } else {
+                reject(new Error('Object is not fine'));
+            }
+        });
+    }
+    function login() {
+        pushData()
+            .then(function () {
+                if (obj.id !== "Not Found") {
+                    setTimeout(redirect, 1200);
+                } else {
+                    alert("Такого пользователя не существует/неверный пароль")
+                }
+            })
+            .catch(function (error) {
+                console.error('Error in pushData:', error);
+                // Handle the error as needed
+            }); 
+    }
+    document.getElementById("Login").onclick = login;
+
+</script>
